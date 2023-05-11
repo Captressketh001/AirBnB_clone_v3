@@ -4,7 +4,7 @@ from flasgger.utils import swag_from
 from models import storage
 from models.amenity import Amenity
 
-@app_views('/amenities', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/amenity/all_amenities.yml')
 def amenities():
     amenities = storage.all(Amenity).values

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """cities route"""
 from api.v1.views import app_views
-from flask import jsonify, abort, make_response,request
+from flask import jsonify, abort, make_response, request
 from flasgger.utils import swag_from
 from models import storage
 from models.state import State
@@ -20,7 +20,7 @@ def cities_by_states(state_id):
 
     for cities in states.cities:
         city_list.append(cities.to_dict())
- 
+
     return jsonify(city_list)
 
 
@@ -33,7 +33,7 @@ def cities(city_id):
     if not city:
         abort(404)
     return jsonify(city.to_dict())
- 
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/city/delete_city.yml', methods=['DELETE'])

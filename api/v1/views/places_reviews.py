@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Places review"""
 from api.v1.views import app_views
-from flask import jsonify, abort, make_response,request
+from flask import jsonify, abort, make_response, request
 from flasgger.utils import swag_from
 from models import storage
 from models.place import Place
@@ -41,7 +41,7 @@ def get_review(review_id):
 @swag_from('documentation/review/delete_reviews.yml', methods=['DELETE'])
 def delete_review(review_id):
     """Delete Review"""
-    review =storage.get(Review, review_id)
+    review = storage.get(Review, review_id)
     if not review:
         abort(404)
 
@@ -73,7 +73,7 @@ def post_review(place_id):
 
     if 'text' not in request_data:
         abort(400, description='Missing text')
-    
+
     request_data['place_id'] = place_id
     review = Place(**request_data)
     review.save()
@@ -96,8 +96,8 @@ def put_review(review_id):
 
     ignore_keys = ['id', 'user_id', 'place_id', 'created_at', 'updated_at']
     for key, value in request_data.items():
-        if not key in ignore_keys:
+        if key not in ignore_keys:
             setattr(review, key, value)
     storage.save()
-    
+
     return make_response(jsonify(review.to_dict()), 200)

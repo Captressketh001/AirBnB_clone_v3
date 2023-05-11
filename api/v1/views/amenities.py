@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Amenities route"""
 from api.v1.views import app_views
-from flask import jsonify, abort, make_response,request
+from flask import jsonify, abort, make_response, request
 from flasgger.utils import swag_from
 from models import storage
 from models.amenity import Amenity

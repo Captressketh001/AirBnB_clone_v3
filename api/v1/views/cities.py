@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""cities route"""
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response,request
 from flasgger.utils import swag_from
@@ -5,10 +7,12 @@ from models import storage
 from models.state import State
 from models.city import City
 
+
 @app_views.route('/states/<state_id>/cities', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/city/cities_by_state.yml', methods=['GET'])
 def cities_by_states(state_id):
+    """Get a city object"""
     city_list = []
     states = storage.get(State, state_id)
     if not states:
@@ -16,13 +20,15 @@ def cities_by_states(state_id):
 
     for cities in states.cities:
         city_list.append(cities.to_dict())
-    
+
     return jsonify(city_list)
 
 
-@app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['GET'],
+                 strict_slashes=False)
 @swag_from('documentation/city/get_city.yml', methods=['GET'])
 def cities(city_id):
+    """Get a city"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -32,19 +38,22 @@ def cities(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/city/delete_city.yml', methods=['DELETE'])
 def delete_city(city_id):
+     """Delete a city"""
      city = storage.get(City, city_id)
      if not city:
           abort(404)
-    
+
      storage.delete(city)
      storage.save()
 
      return make_response(jsonify({}), 200)
 
 
-@app_views.route('/states/<state_id>/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=['POST'],
+                 strict_slashes=False)
 @swag_from('documentation/city/create_city.yml', methods=['POST'])
 def create_city(state_id):
+     """Create a city"""
      state = storage.get(State, state_id)
      if not state:
           abort(404)
@@ -62,9 +71,11 @@ def create_city(state_id):
      return make_response(jsonify(city.to_dict()), 201)
 
 
-@app_views.route('/cities/<city_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/cities/<city_id>', methods=['PUT'],
+                 strict_slashes=False)
 @swag_from('documentation/city/update_city.yml', methods=['PUT'])
 def update_city(city_id):
+    """Update a city"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)

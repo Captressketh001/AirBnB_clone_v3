@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Place route"""
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response,request
 from flasgger.utils import swag_from
@@ -7,9 +9,11 @@ from models.place import Place
 from models.user import User
 
 
-@app_views.route('cities/<city_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('cities/<city_id>/places', methods=['GET'],
+                 strict_slashes=False)
 @swag_from('documentation/place/place_by_city.yml', methods=['GET'])
 def place_by_city(city_id):
+    """Get places by city"""
     cities = storage.get(City, city_id)
     if not cities:
         abort(404)
@@ -20,9 +24,11 @@ def place_by_city(city_id):
     return jsonify(place_list)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'],
+                 strict_slashes=False)
 @swag_from('documentation/place/get_place.yml', methods=['GET'])
 def get_place(place_id):
+    """Get a place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -30,9 +36,11 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.route('/places/<place_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
 @swag_from('documentation/place/delete_place.yml', methods=['DELETE'])
 def delete_place(place_id):
+    """Delete a place"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -42,9 +50,11 @@ def delete_place(place_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route('/cities/<city_id>/places', methods=['POST'], strict_slashes=False)
+@app_views.route('/cities/<city_id>/places', methods=['POST'],
+                 strict_slashes=False)
 @swag_from('documentation/place/create_place.yml', methods=['POST'])
 def create_place(city_id):
+    """Create a place"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -68,9 +78,11 @@ def create_place(city_id):
     return make_response(jsonify(place.to_dict()), 201)
 
 
-@app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['PUT'],
+                 strict_slashes=False)
 @swag_from('documentation/place/update_place.yml', methods=['PUT'])
 def update_place(place_id):
+    """Update places"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Index route"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -8,13 +10,18 @@ from models.place import Place
 from models.review import Review
 from models.user import User
 
+
 @app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
+    """Return status code"""
     return jsonify({"status":"OK"})
 
 
 @app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stat():
+    """Return stats
+    statecount etc
+    """
     statecount = storage.count(State)
     placecount = storage.count(Place)
     amenitycount = storage.count(Amenity)

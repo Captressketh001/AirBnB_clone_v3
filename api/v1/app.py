@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Apps file"""
 from flask import Flask, make_response, jsonify
 from models import storage
 from os import environ
@@ -11,8 +13,10 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
 
+
 @app.errorhandler(404)
 def nop(e):
+    """Return Not found"""
     return make_response(jsonify({"error":"Not Found"}), 404)
 
 

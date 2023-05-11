@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Place route"""
 from api.v1.views import app_views
-from flask import jsonify, abort, make_response,request
+from flask import jsonify, abort, make_response, request
 from flasgger.utils import swag_from
 from models import storage
 from models.city import City
@@ -18,7 +18,7 @@ def place_by_city(city_id):
     if not cities:
         abort(404)
     place_list = []
-    for city in cities.name:
+    for city in cities.places:
         place_list.append(city.to_dict())
 
     return jsonify(place_list)
@@ -80,7 +80,7 @@ def create_place(city_id):
 
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
-@swag_from('documentation/place/update_place.yml', methods=['PUT'])
+@swag_from('documentation/place/put_place.yml', methods=['PUT'])
 def update_place(place_id):
     """Update places"""
     place = storage.get(Place, place_id)

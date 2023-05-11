@@ -4,7 +4,7 @@ from flasgger.utils import swag_from
 from models import storage
 from models.user import User
 
-@app_views('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/users/users.yml')
 def all_users():
     users = storage.all(User).values

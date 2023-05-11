@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Places review"""
 from api.v1.views import app_views
 from flask import jsonify, abort, make_response,request
 from flasgger.utils import swag_from
@@ -6,10 +8,12 @@ from models.place import Place
 from models.review import Review
 from models.user import User
 
+
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
 @swag_from('documentation/review/review_by_place.yml', methods=['GET'])
 def reviews(place_id):
+    """get all review objects"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -24,6 +28,7 @@ def reviews(place_id):
                  strict_slashes=False)
 @swag_from('documentation/review/get_review.yml', methods=['GET'])
 def get_review(review_id):
+    """Get a particular review"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)
@@ -35,6 +40,7 @@ def get_review(review_id):
                  strict_slashes=False)
 @swag_from('documentation/review/delete_review.yml', methods=['DELETE'])
 def delete_review(review_id):
+    """Delete Review"""
     review =storage.get(Review, review_id)
     if not review:
         abort(404)
@@ -49,6 +55,7 @@ def delete_review(review_id):
                  strict_slashes=False)
 @swag_from('documentation/review/create_review.yml', methods=['POST'])
 def create_review(place_id):
+    """Create a new review"""
     place = storage.get(Place, place_id)
     if not place:
         abort(404)
@@ -78,6 +85,7 @@ def create_review(place_id):
                  strict_slashes=False)
 @swag_from('documentation/review/update_review.yml', methods=['PUT'])
 def update_review(review_id):
+    """Update a review"""
     review = storage.get(Review, review_id)
     if not review:
         abort(404)

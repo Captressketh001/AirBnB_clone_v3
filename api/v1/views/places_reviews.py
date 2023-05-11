@@ -11,8 +11,8 @@ from models.user import User
 
 @app_views.route('/places/<place_id>/reviews', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/review/review_by_place.yml', methods=['GET'])
-def reviews(place_id):
+@swag_from('documentation/review/get_reviews.yml', methods=['GET'])
+def get_reviews(place_id):
     """get all review objects"""
     place = storage.get(Place, place_id)
     if not place:
@@ -38,7 +38,7 @@ def get_review(review_id):
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'],
                  strict_slashes=False)
-@swag_from('documentation/review/delete_review.yml', methods=['DELETE'])
+@swag_from('documentation/review/delete_reviews.yml', methods=['DELETE'])
 def delete_review(review_id):
     """Delete Review"""
     review =storage.get(Review, review_id)
@@ -53,8 +53,8 @@ def delete_review(review_id):
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'],
                  strict_slashes=False)
-@swag_from('documentation/review/create_review.yml', methods=['POST'])
-def create_review(place_id):
+@swag_from('documentation/review/post_review.yml', methods=['POST'])
+def post_review(place_id):
     """Create a new review"""
     place = storage.get(Place, place_id)
     if not place:
@@ -83,8 +83,8 @@ def create_review(place_id):
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'],
                  strict_slashes=False)
-@swag_from('documentation/review/update_review.yml', methods=['PUT'])
-def update_review(review_id):
+@swag_from('documentation/review/put_reviews.yml', methods=['PUT'])
+def put_review(review_id):
     """Update a review"""
     review = storage.get(Review, review_id)
     if not review:

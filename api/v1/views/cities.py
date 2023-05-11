@@ -20,7 +20,7 @@ def cities_by_states(state_id):
 
     for cities in states.cities:
         city_list.append(cities.to_dict())
-
+ 
     return jsonify(city_list)
 
 
@@ -38,37 +38,37 @@ def cities(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/city/delete_city.yml', methods=['DELETE'])
 def delete_city(city_id):
-     """Delete a city"""
-     city = storage.get(City, city_id)
-     if not city:
-          abort(404)
+    """Delete a city"""
+    city = storage.get(City, city_id)
+    if not city:
+        abort(404)
 
-     storage.delete(city)
-     storage.save()
+    storage.delete(city)
+    storage.save()
 
-     return make_response(jsonify({}), 200)
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/city/create_city.yml', methods=['POST'])
 def create_city(state_id):
-     """Create a city"""
-     state = storage.get(State, state_id)
-     if not state:
-          abort(404)
+    """Create a city"""
+    state = storage.get(State, state_id)
+    if not state:
+        abort(404)
 
-     request_data = request.get_json()
-     if not request_data:
-          abort(400, description='Not a JSON')
-     if 'name' not in request_data:
-          abort(400, description='Missing name')
+    request_data = request.get_json()
+    if not request_data:
+        abort(400, description='Not a JSON')
+    if 'name' not in request_data:
+        abort(400, description='Missing name')
 
-     city = City(**request_data)
-     city.state_id = state.id
-     city.save()
+    city = City(**request_data)
+    city.state_id = state.id
+    city.save()
 
-     return make_response(jsonify(city.to_dict()), 201)
+    return make_response(jsonify(city.to_dict()), 201)
 
 
 @app_views.route('/cities/<city_id>', methods=['PUT'],

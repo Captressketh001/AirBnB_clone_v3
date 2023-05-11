@@ -11,8 +11,8 @@ from models.user import User
 
 @app_views.route('cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
-@swag_from('documentation/place/place_by_city.yml', methods=['GET'])
-def place_by_city(city_id):
+@swag_from('documentation/place/get_places.yml', methods=['GET'])
+def get_places(city_id):
     """Get places by city"""
     cities = storage.get(City, city_id)
     if not cities:
@@ -53,7 +53,7 @@ def delete_place(place_id):
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
 @swag_from('documentation/place/post_place.yml', methods=['POST'])
-def create_place(city_id):
+def post_place(city_id):
     """Create a place"""
     city = storage.get(City, city_id)
     if not city:
@@ -81,7 +81,7 @@ def create_place(city_id):
 @app_views.route('/places/<place_id>', methods=['PUT'],
                  strict_slashes=False)
 @swag_from('documentation/place/put_place.yml', methods=['PUT'])
-def update_place(place_id):
+def put_place(place_id):
     """Update places"""
     place = storage.get(Place, place_id)
     if not place:

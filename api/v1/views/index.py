@@ -22,18 +22,12 @@ def stat():
     """Return stats
     statecount etc
     """
-    statecount = storage.count(State)
-    placecount = storage.count(Place)
-    amenitycount = storage.count(Amenity)
-    citycount = storage.count(City)
-    reviewcount = storage.count(Review)
-    usercount = storage.count(User)
+    classes = [Amenity, City, Place, Review, State, User]
+    names = ["amenities", "cities", "places", "reviews", "states", "users"]
 
-    return jsonify({
-        "amenities": amenitycount,
-        "cities": citycount,
-        "places": placecount,
-        "reviews": reviewcount,
-        "states": statecount,
-        "users": usercount
-    })
+    objs = {}
+    for i in range(len(classes)):
+        objs[names[i]] = storage.count(classes[i])
+
+
+    return jsonify(objs)

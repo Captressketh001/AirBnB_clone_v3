@@ -17,7 +17,7 @@ cors = CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
 @app.errorhandler(404)
 def nop(e):
     """Return Not found"""
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 app.config['SWAGGER'] = {
